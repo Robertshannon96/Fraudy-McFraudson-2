@@ -7,8 +7,6 @@ import pandas as pd
 class DataPipeline:
     def __init__(self, df):
         self.df = df
-        self.fraud = self.df[self.df['fraud'] == 1]
-        self.not_fraud = self.df[self.df['fraud'] == 0]
 
     def add_fraud(self):
         """
@@ -42,9 +40,7 @@ class DataPipeline:
         self.df['e_dom2'] = self.df['email_domain'].apply(lambda x: ''.join(x.split(".")[1:]))
 
     def test_script_examples(self):
-        fraud_examples = self.fraud.sample(2)
-        not_fraud_examples = self.not_fraud.sample(2)
-        examples = pd.concat([fraud_examples, not_fraud_examples])
+        examples = self.df.sample(1)
         examples.to_csv('../data/test_script_examples.csv')
 
 
@@ -80,6 +76,7 @@ def main():
     df_pipe.add_fraud()
     df_pipe.count_fraud()
     df_pipe.clean()
+    df_pipe.test_script_examples()
     df_pipe.drop_leaky()
     df = df_pipe.df
     hist = Eda(df)
