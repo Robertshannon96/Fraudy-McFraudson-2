@@ -21,7 +21,7 @@ class MyModel():
         self.model.fit(X, y)
     
     def predict(self, inflow):
-        return self.model.predict(inflow)
+        return self.model.predict_proba(inflow)
 
     def score(self, X, y):
         return self.model.score(X, y)

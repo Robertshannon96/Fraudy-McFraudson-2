@@ -5,4 +5,5 @@ from eda import DataPipeline
 from model import MyModel
 
 if __name__ == '__main__':
-    pass
+    infile = open('model.pkl','rb')
+    model = pickle.load(infile)
