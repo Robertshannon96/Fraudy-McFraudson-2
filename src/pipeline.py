@@ -2,6 +2,10 @@ from pandas_profiling import ProfileReport
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
+from pymongo import MongoClient
+client = MongoClient('localhost', 27017)
+db = client['creditcard']
+table = db['fraudster']
 
 pd.set_option('display.max_columns', None)
 
@@ -13,6 +17,9 @@ if __name__ == '__main__':
     df['has_address'] = df['venue_address'].str.len() > 0
     not_fraud = df.loc[df['fraud'] == 0]
     fraud = df.loc[df['fraud'] == 1]
+    
+    table.collection.insert_many(df.to_dict('dict'))
+    
     # df = df.dropna()
     # print(not_fraud.head())
     
