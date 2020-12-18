@@ -2,7 +2,10 @@ import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 import pandas as pd
+import pickle
 
+from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 class DataPipeline:
     def __init__(self, df):
@@ -40,6 +43,74 @@ class DataPipeline:
         self.df['e_dom1'] = self.df['email_domain'].apply(lambda x: x.split(".")[0])
         self.df['e_dom2'] = self.df['email_domain'].apply(lambda x: ''.join(x.split(".")[1:]))
         self.df['listed'] = self.df['listed'].replace({'y': 1, 'n': 0})
+
+    def nlp_vectorization(self):
+        """
+        Pulls out natural language features and vectorizes them with tf-idf
+        vectorizers that have been fit to the full training dataset. Code
+        that is commented out is for the generation and pickling of vectorizers
+        left in incase of future modifications and tuning.
+
+        Returns
+        ----------
+        text_df, name_df, org_df - Dense Panda dataframes with the results
+                                    of vectorization
+        """
+
+        text = self.df['description'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
+        # vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('vectorizers/text_vec.pkl','rb')
+        vecto = pickle.load(infile)
+        text_vect = vecto.fit_transform(text)
+        text_df = pd.DataFrame(text_vect.todense())
+        # f =  open('vectorizers/text_vec.pkl', 'wb')
+        # pickle.dump(vecto, f)
+
+        names = self.df['name']
+        # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('vectorizers/name_vec.pkl','rb')
+        name_vecto = pickle.load(infile)
+        name_vect = name_vecto.fit_transform(names)
+        name_df = pd.DataFrame(name_vect.todense())
+        # f =  open('vectorizers/name_vec.pkl', 'wb')
+        # pickle.dump(name_vecto, f)
+
+        org_desc = self.df['org_desc'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
+        # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('vectorizers/name_vec.pkl','rb')
+        org_vecto = pickle.load(infile)
+        org_vect = org_vecto.fit_transform(org_desc)
+        org_df = pd.DataFrame(org_vect.todense())
+        # f =  open('vectorizers/org_vec.pkl', 'wb')
+        # pickle.dump(org_vecto, f)
+
+        return text_df, name_df, org_df
+    
+    def one_hot(self):
+        """
+        Pulls out the features that will actually be run through the model
+        (beyond nlp) and one hot encodes the relevant features.
+
+        Returns
+        ----------
+        df_one_hot - A pandas dataframe that when joined with the results
+                        of nlp_vectorization can be run through the model.
+        """
+
+        variables = ['country', 'e_dom1', 'e_dom2', 'currency', 'venue_state', 'venue_country']
+    
+        X = self.df[['body_length', 'channels', 'delivery_method',
+            'event_created', 'event_end', 'event_published',
+            'event_start', 'fb_published', 'has_analytics', 'has_header', 
+            'has_logo', 'listed', 'name_length', 'num_order',       
+            'object_id', 'org_facebook', 'org_twitter',       
+            'num_ticket_types', 'num_previous_payouts', 'show_map',       
+            'user_age', 'user_created', 'user_type', 'has_address', 
+            'country', 'e_dom1', 'e_dom2', 'currency', 'venue_state', 'venue_country']]
+        
+        df_one_hot = pd.get_dummies(X,columns=variables,drop_first=True)
+
+        return df_one_hot
 
     def test_script_examples(self):
         examples = self.df.sample(1)
