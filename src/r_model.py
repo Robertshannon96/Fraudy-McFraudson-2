@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 from bs4 import BeautifulSoup
-from eda import DataPipeline
+from r_eda import DataPipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -60,24 +60,45 @@ def get_example(filepath):
     example = pipe.format_input()
     return testing(example)
     
-
+# DO NOT TOUCH THIS
 def testing(example):
     """Takes an example code 
-
     Args:
         example ([type]): [description]
     """    
-    clean_df = pd.read_csv('../data/test_script_examples.csv')
+    clean_df = pd.read_csv('../data/test_script_examples.csv', index_col=0)
     # print(clean_df.head())
+    clean_df2 = pd.DataFrame()
+    for i in clean_df.columns:
+        clean_df2.loc[0, i] = 0
+    
+    # clean_df = clean_df.replace(np.nan, 0)
+    # clean_df = clean_df.fillna(0)
+
+    # print(clean_df[clean_df != 0])
     for i in example.columns:
-        if i in clean_df.columns:
-            clean_df[i] = example[i]
-    return clean_df
+        # if i != np.nan:
+        if i in clean_df2.columns:
+            clean_df2[i] = example[i]
+    return clean_df2
+# DO NOT TOUCH THIS
+
+def test_script_examples(df):
+        clean_df = df.sample(1)
+        for i in clean_df.columns:
+            clean_df[i] = 0 
+        clean_df.to_csv('../data/test_script_examples.csv')
+
+
 
 
 if __name__ == '__main__':
     # X, y = get_data('../data/data.json')
+   
+    # test_script_examples(X)
     X_test = get_example('../data/example.json')
+   
+    
     # model = MyModel()
     # model.fit(X, y)
     # print(model.score(X, y))
@@ -86,4 +107,5 @@ if __name__ == '__main__':
 
     infile = open('model.pkl','rb')
     model = pickle.load(infile)
+    # print(set(model.estimators_).difference(set(X_test.columns)))
     print(model.predict(X_test))
