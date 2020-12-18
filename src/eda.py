@@ -56,30 +56,33 @@ class DataPipeline:
         text_df, name_df, org_df - Dense Panda dataframes with the results
                                     of vectorization
         """
-
+        
         text = self.df['description'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
         # vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        # vecto.fit(text)
         infile = open('vectorizers/text_vec.pkl','rb')
         vecto = pickle.load(infile)
-        text_vect = vecto.fit_transform(text)
+        text_vect = vecto.transform(text)
         text_df = pd.DataFrame(text_vect.todense())
         # f =  open('vectorizers/text_vec.pkl', 'wb')
         # pickle.dump(vecto, f)
 
         names = self.df['name']
         # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        # name_vecto.fit(names)
         infile = open('vectorizers/name_vec.pkl','rb')
         name_vecto = pickle.load(infile)
-        name_vect = name_vecto.fit_transform(names)
+        name_vect = name_vecto.transform(names)
         name_df = pd.DataFrame(name_vect.todense())
         # f =  open('vectorizers/name_vec.pkl', 'wb')
         # pickle.dump(name_vecto, f)
 
         org_desc = self.df['org_desc'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
         # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        # org_vecto.fit(org_desc)
         infile = open('vectorizers/name_vec.pkl','rb')
         org_vecto = pickle.load(infile)
-        org_vect = org_vecto.fit_transform(org_desc)
+        org_vect = org_vecto.transform(org_desc)
         org_df = pd.DataFrame(org_vect.todense())
         # f =  open('vectorizers/org_vec.pkl', 'wb')
         # pickle.dump(org_vecto, f)
@@ -111,6 +114,13 @@ class DataPipeline:
         df_one_hot = pd.get_dummies(X,columns=variables,drop_first=True)
 
         return df_one_hot
+
+    def format_input(self):
+        self.clean()
+        desc, name, org = self.nlp_vectorization()
+        rest = self.one_hot()
+        X = pd.concat([rest, desc, name, org], axis=1)
+        return X
 
     def test_script_examples(self):
         examples = self.df.sample(1)
