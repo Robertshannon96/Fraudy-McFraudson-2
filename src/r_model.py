@@ -15,7 +15,7 @@ class MyModel():
     """
     
     def __init__(self):
-        self.model = RandomForestClassifier()
+        self.model = RandomForestClassifier(random_state=69)
 
     def fit(self, X, y):
         self.model.fit(X, y)
@@ -59,6 +59,9 @@ def get_example(filepath):
     pipe = DataPipeline(ex)
     example = pipe.format_input()
     return testing(example)
+
+def inflow_channel(filepath):
+    pass
     
 # DO NOT TOUCH THIS
 def testing(example):
@@ -93,19 +96,18 @@ def test_script_examples(df):
 
 
 if __name__ == '__main__':
-    # X, y = get_data('../data/data.json')
+    X, y = get_data('../data/data.json')
    
     # test_script_examples(X)
     X_test = get_example('../data/example.json')
    
-    
-    # model = MyModel()
-    # model.fit(X, y)
+    model = MyModel()
+    model.fit(X, y)
     # print(model.score(X, y))
-    # f =  open('../model.pkl', 'wb')
-    # pickle.dump(model, f)
+    f =  open('../model.pkl', 'wb')
+    pickle.dump(model, f)
 
-    infile = open('model.pkl','rb')
+    infile = open('../model.pkl','rb')
     model = pickle.load(infile)
     # print(set(model.estimators_).difference(set(X_test.columns)))
     print(model.predict(X_test))
