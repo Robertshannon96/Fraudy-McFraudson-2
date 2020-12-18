@@ -7,7 +7,7 @@ Details on data featurization and model creation can be found in detail in model
 
 As a breif overview the training data and any incoming data is featurized with NLP methods and one-hot encoding of categorical features. The model used is a Random Forest Classifier and initial testing against a hold out set showed an accuracy of 98% and an F1 score of .88 (scores obtained with a default threshold of .5). The most important features of the model can be seen below.
 
-![Feature Importance](images/)
+![Feature Importances](images/feat_importance.png)
 
 Description of features in graph above.
 
