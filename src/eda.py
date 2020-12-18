@@ -112,6 +112,13 @@ class DataPipeline:
 
         return df_one_hot
 
+    def format_input(self):
+        self.df.clean()
+        desc, name, org = self.df.nlp_vectorization()
+        rest = self.df.one_hot()
+        X = pd.concat([rest, desc, name, org], axis=1)
+        return X
+
     def test_script_examples(self):
         examples = self.df.sample(1)
         examples.to_csv('../data/test_script_examples.csv')
