@@ -59,5 +59,5 @@ if __name__ == '__main__':
     model = MyModel()
     model.fit(X, y)
     print(model.score(X, y))
-    f =  open('model.pkl', 'wb')
-    pickle.dump(model, f)
+    # f =  open('model.pkl', 'wb')
+    # pickle.dump(model, f)

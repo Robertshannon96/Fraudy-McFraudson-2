@@ -99,7 +99,7 @@ class DataPipeline:
             name_vecto = pickle.load(infile)
             name_vect = name_vecto.transform(names)
             name_df = pd.DataFrame(name_vect.todense())
-            print(name_df.shape)
+            # print(name_df.shape)
             # f =  open('../vectorizers/name_vec.pkl', 'wb')
             # pickle.dump(name_vecto, f)
 
@@ -112,7 +112,7 @@ class DataPipeline:
             org_vecto = pickle.load(infile)
             org_vect = org_vecto.transform(org_desc)
             org_df = pd.DataFrame(org_vect.todense())
-            print(org_df.shape)
+            # print(org_df.shape)
             # f =  open('../vectorizers/org_vec.pkl', 'wb')
             # pickle.dump(org_vecto, f)
 
@@ -122,7 +122,7 @@ class DataPipeline:
             org_vecto = pickle.load(infile)
             org_vect = org_vecto.transform(org_desc)
             org_df = pd.DataFrame(org_vect.todense())
-            print(org_df.shape)
+            # print(org_df.shape)
             # f =  open('../vectorizers/org_vec.pkl', 'wb')
             # pickle.dump(org_vecto, f)
 

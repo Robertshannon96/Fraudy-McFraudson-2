@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 from bs4 import BeautifulSoup
-from eda import DataPipeline
+from r_eda import DataPipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -67,7 +67,7 @@ def testing(example):
     Args:
         example ([type]): [description]
     """    
-    clean_df = pd.read_csv('../data/test_script_examples.csv')
+    clean_df = pd.read_csv('../data/test_script_examples.csv', index_col=0)
     # print(clean_df.head())
     for i in example.columns:
         if i in clean_df.columns:
@@ -76,14 +76,22 @@ def testing(example):
 
 
 if __name__ == '__main__':
-    # X, y = get_data('../data/data.json')
-    X_test = get_example('../data/example.json')
-    # model = MyModel()
-    # model.fit(X, y)
+    X, y = get_data('../data/data.json')
+    
+    model = MyModel()
+    model.fit(X, y)
     # print(model.score(X, y))
-    # f =  open('/Users/riley/Desktop/DSI/den-19/repos/Fraudy-McFraudson-2/src/model.pkl', 'wb')
+    # f =  open('../model.pkl', 'wb')
     # pickle.dump(model, f)
 
-    infile = open('model.pkl','rb')
-    model = pickle.load(infile)
+    blank = X.iloc[0, :]
+    for i in blank.columns:
+        blank[i] = 0 
+    blank.to_csv('../data/test_script_examples.csv')
+
+    X_test = get_example('../data/example.json')
+    print(X_test.info())
+
+    # infile = open('../model.pkl','rb')
+    # model = pickle.load(infile)
     print(model.predict(X_test))

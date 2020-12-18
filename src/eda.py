@@ -108,12 +108,11 @@ class DataPipeline:
             'has_logo', 'listed', 'name_length', 'num_order',       
             'object_id', 'org_facebook', 'org_twitter',       
             'num_ticket_types', 'num_previous_payouts', 'show_map',       
-            'user_age', 'user_created', 'user_type', 'has_address', 
-            'country', 'e_dom1', 'e_dom2', 'currency', 'venue_state', 'venue_country']]
+            'user_age', 'user_created', 'user_type', 'has_address']]
         
-        df_one_hot = pd.get_dummies(X,columns=variables,drop_first=True)
+        # df_one_hot = pd.get_dummies(X,columns=variables,drop_first=True)
 
-        return df_one_hot
+        return X
 
     def format_input(self):
         self.clean()
