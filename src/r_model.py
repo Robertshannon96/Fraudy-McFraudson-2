@@ -89,15 +89,26 @@ def test_script_examples(df):
             clean_df[i] = 0 
         clean_df.to_csv('../data/test_script_examples.csv')
 
+def test_inflow_channel(filepath):
+    ex = pd.DataFrame(pd.read_json(filepath).iloc[0, :]).T
+    print(ex.shape)
+    pipe = DataPipeline(ex)
+    example = pipe.format_input()
+    return testing(example)
 
-
+def inflow_channel(dick):
+    ex = pd.DataFrame(dick)
+    print(ex.shape)
+    pipe = DataPipeline(ex)
+    example = pipe.format_input()
+    return testing(example)
 
 if __name__ == '__main__':
     # X, y = get_data('../data/data.json')
    
     # test_script_examples(X)
-    X_test = get_example('../data/example.json')
-   
+    # X_test = get_example('../data/example.json')
+    X_test = inflow_channel('../data/data.json')
     
     # model = MyModel()
     # model.fit(X, y)

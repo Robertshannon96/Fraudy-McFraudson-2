@@ -58,73 +58,73 @@ class DataPipeline:
         """
         
         text = self.df['description'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
-        if not len(text.iloc[0]):
-            text.iloc[0] += 'hello'
+        # if not len(text.iloc[0]):
+        #     text.iloc[0] += 'hello'
 
-            # vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/text_vec.pkl','rb')
-            vecto = pickle.load(infile)
-            text_vect = vecto.transform(text)
-            text_df = pd.DataFrame(text_vect.todense())
-            print(text_df.shape)
-            # f =  open('../vectorizers/text_vec.pkl', 'wb')
-            # pickle.dump(vecto, f)
+        # vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('../vectorizers/text_vec.pkl','rb')
+        vecto = pickle.load(infile)
+        text_vect = vecto.transform(text)
+        text_df = pd.DataFrame(text_vect.todense())
+        print(text_df.shape)
+        # f =  open('../vectorizers/text_vec.pkl', 'wb')
+        # pickle.dump(vecto, f)
 
-        else:
-            # vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/text_vec.pkl','rb')
-            vecto = pickle.load(infile)
-            text_vect = vecto.transform(text)
-            text_df = pd.DataFrame(text_vect.todense())
-            print(text_df.shape)
-            # f =  open('../vectorizers/text_vec.pkl', 'wb')
-            # pickle.dump(vecto, f)
+        # else:
+        #     # vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        #     infile = open('../vectorizers/text_vec.pkl','rb')
+        #     vecto = pickle.load(infile)
+        #     text_vect = vecto.transform(text)
+        #     text_df = pd.DataFrame(text_vect.todense())
+        #     print(text_df.shape)
+        #     # f =  open('../vectorizers/text_vec.pkl', 'wb')
+        #     # pickle.dump(vecto, f)
 
         names = self.df['name']
-        if not names.iloc[0]:
-            names.iloc[0] += 'hello'
+        # if not names.iloc[0]:
+        #     names.iloc[0] += 'hello'
 
-            # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/name_vec.pkl','rb')
-            name_vecto = pickle.load(infile)
-            name_vect = name_vecto.transform(names)
-            name_df = pd.DataFrame(name_vect.todense())
-            print(name_df.shape)
-            # f =  open('../vectorizers/name_vec.pkl', 'wb')
-            # pickle.dump(name_vecto, f)
+        # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('../vectorizers/name_vec.pkl','rb')
+        name_vecto = pickle.load(infile)
+        name_vect = name_vecto.transform(names)
+        name_df = pd.DataFrame(name_vect.todense())
+        print(name_df.shape)
+        # f =  open('../vectorizers/name_vec.pkl', 'wb')
+        # pickle.dump(name_vecto, f)
 
-        else:
-            # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/name_vec.pkl','rb')
-            name_vecto = pickle.load(infile)
-            name_vect = name_vecto.transform(names)
-            name_df = pd.DataFrame(name_vect.todense())
-            print(name_df.shape)
-            # f =  open('../vectorizers/name_vec.pkl', 'wb')
-            # pickle.dump(name_vecto, f)
+        # else:
+        #     # name_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        #     infile = open('../vectorizers/name_vec.pkl','rb')
+        #     name_vecto = pickle.load(infile)
+        #     name_vect = name_vecto.transform(names)
+        #     name_df = pd.DataFrame(name_vect.todense())
+        #     print(name_df.shape)
+        #     # f =  open('../vectorizers/name_vec.pkl', 'wb')
+        #     # pickle.dump(name_vecto, f)
 
         org_desc = self.df['org_desc'].apply(lambda text: BeautifulSoup(text, 'html.parser').get_text())
-        if not len(org_desc.iloc[0]):
-            org_desc.iloc[0] += 'hello'
+        # if not len(org_desc.iloc[0]):
+        #     org_desc.iloc[0] += 'hello'
 
-            # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/name_vec.pkl','rb')
-            org_vecto = pickle.load(infile)
-            org_vect = org_vecto.transform(org_desc)
-            org_df = pd.DataFrame(org_vect.todense())
-            print(org_df.shape)
-            # f =  open('../vectorizers/org_vec.pkl', 'wb')
-            # pickle.dump(org_vecto, f)
+        # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        infile = open('../vectorizers/name_vec.pkl','rb')
+        org_vecto = pickle.load(infile)
+        org_vect = org_vecto.transform(org_desc)
+        org_df = pd.DataFrame(org_vect.todense())
+        print(org_df.shape)
+        # f =  open('../vectorizers/org_vec.pkl', 'wb')
+        # pickle.dump(org_vecto, f)
 
-        else:
-            # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
-            infile = open('../vectorizers/name_vec.pkl','rb')
-            org_vecto = pickle.load(infile)
-            org_vect = org_vecto.transform(org_desc)
-            org_df = pd.DataFrame(org_vect.todense())
-            print(org_df.shape)
-            # f =  open('../vectorizers/org_vec.pkl', 'wb')
-            # pickle.dump(org_vecto, f)
+        # else:
+        #     # org_vecto = TfidfVectorizer(stop_words='english', max_features=5)
+        #     infile = open('../vectorizers/name_vec.pkl','rb')
+        #     org_vecto = pickle.load(infile)
+        #     org_vect = org_vecto.transform(org_desc)
+        #     org_df = pd.DataFrame(org_vect.todense())
+        #     print(org_df.shape)
+        #     # f =  open('../vectorizers/org_vec.pkl', 'wb')
+        #     # pickle.dump(org_vecto, f)
 
 
         return text_df, name_df, org_df
@@ -167,8 +167,8 @@ class DataPipeline:
         for i in examples.columns:
             examples[i] = 0 
         examples.to_csv('../data/test_script_examples.csv')
-        clean_df = pd.read_csv('../data/test_script_examples.csv')
-        print(clean_df.head())
+        # clean_df = pd.read_csv('../data/test_script_examples.csv')
+        # print(clean_df.head())
 
 
 class Eda:
