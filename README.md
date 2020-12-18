@@ -9,8 +9,6 @@ As a breif overview the training data and any incoming data is featurized with N
 
 ![Feature Importances](images/feat_importance.png)
 
-Description of features in graph above.
-
 ## Web Interface
 
 For ease of use, and to interface with the Heroku server which has incoming data, development of a Flask app hosted on AWS is currently underway.
